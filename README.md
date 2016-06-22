@@ -1,7 +1,8 @@
 ansible-role-timezone
 =====================
 
-Set timezone and optionally enable NTP on a host. Uses timedatectl to perform task.
+Set timezone and optionally enable NTP on a host.
+Uses timedatectl to perform task; on RedHat and CentOS still uses regular ntp(d) since their systemd is compiled with systemd-timesyncd explicitely turned off.
 
 Requirements
 ------------

@@ -1,12 +1,22 @@
 ---
-- name: Check current timezone
-  shell: >-
-    timedatectl status
-  changed_when: false
-  register: current_timezone
-- name: Set Timezone
-  command: timedatectl set-timezone {{ timezone }}
-  when: "'{{ timezone }}' not in current_timezone.stdout"
-- name: Enable ntp
-  command: timedatectl set-ntp true
-  when: "enable_ntp and 'Network time on: no' in current_timezone.stdout"
+- block:
+    - name: Install ntp (RedHat)
+      yum: name=ntp state=present
+
+    - name: Enable ntp (RedHat)
+      service: name=ntpd state=started enabled=yes
+  when: ansible_distribution in ('CentOS', 'Red Hat Enterprise Linux')
+
+- block:
+  - name: Check current timezone
+    shell: >-
+      timedatectl status
+    changed_when: false
+    register: current_timezone
+  - name: Set Timezone
+    command: timedatectl set-timezone {{ timezone }}
+    when: "'{{ timezone }}' not in current_timezone.stdout"
+  - name: Enable ntp
+    command: timedatectl set-ntp true
+    when: "enable_ntp and 'Network time on: no' in current_timezone.stdout"
+  when: ansible_distribution not in ('CentOS', 'Red Hat Enterprise Linux')
