@@ -9,17 +9,25 @@ galaxy_info:
   platforms:
   - name: EL
     versions:
-      - all
+      - 7
   - name: Fedora
     versions:
-      - all
+      - 20
+      - 21
+      - 22
+      - 23
+      - 24
   - name: Ubuntu
     versions:
-      - all
+      - vivid
+      - wily
+      - xenial
   - name: Debian
     versions:
-      - all
+      - 8
   - name: Archlinux
+    versions:
+      - all
 
   galaxy_tags:
       - system

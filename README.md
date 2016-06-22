@@ -1,7 +1,7 @@
 ansible-role-timezone
 =====================
 
-Set timezone and optionally enable NTP on a host.
+Set timezone and optionally enable NTP on a host. Uses timedatectl to perform task.
 
 Requirements
 ------------
