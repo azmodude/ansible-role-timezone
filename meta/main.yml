@@ -16,7 +16,6 @@ galaxy_info:
       - 21
       - 22
       - 23
-      - 24
   - name: Ubuntu
     versions:
       - vivid
@@ -24,7 +23,7 @@ galaxy_info:
       - xenial
   - name: Debian
     versions:
-      - 8
+      - jessie
   - name: Archlinux
     versions:
       - all
