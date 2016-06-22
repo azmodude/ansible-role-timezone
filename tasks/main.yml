@@ -1,0 +1,12 @@
+---
+- name: Check current timezone
+  shell: >-
+    timedatectl status
+  changed_when: false
+  register: current_timezone
+- name: Set Timezone
+  command: timedatectl set-timezone {{ timezone }}
+  when: "'{{ timezone }}' not in current_timezone.stdout"
+- name: Enable ntp
+  command: timedatectl set-ntp true
+  when: "enable_ntp and 'Network time on: no' in current_timezone.stdout"
