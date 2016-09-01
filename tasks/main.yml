@@ -9,8 +9,7 @@
 
 - block:
   - name: Check current timezone
-    shell: >-
-      timedatectl status
+    command: timedatectl status
     changed_when: false
     register: current_timezone
   - name: Set Timezone
