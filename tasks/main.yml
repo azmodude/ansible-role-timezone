@@ -1,11 +1,13 @@
 ---
 - block:
-    - name: Install ntp (RedHat)
+    - name: Install ntp (RedHat/Centos < 7)
       yum: name=ntp state=present
 
-    - name: Enable ntp (RedHat)
+    - name: Enable ntp (RedHat/Centos < 7)
       service: name=ntpd state=started enabled=yes
-  when: ansible_distribution in ('CentOS', 'Red Hat Enterprise Linux')
+  when: >
+    ansible_distribution in ('CentOS', 'Red Hat Enterprise Linux')
+    and ansible_distribution_version < 7
 
 - block:
   - name: Check current timezone
