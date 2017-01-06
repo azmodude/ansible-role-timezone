@@ -20,4 +20,7 @@
   - name: Enable ntp
     command: timedatectl set-ntp true
     when: "enable_ntp and 'Network time on: no' in current_timezone.stdout"
-  when: ansible_distribution not in ('CentOS', 'Red Hat Enterprise Linux')
+  when: >
+    ansible_distribution not in ('CentOS', 'Red Hat Enterprise Linux') or
+    ansible_distribution in ('CentOS', 'Red Hat Enterprise Linux') and
+    ansible_distribution_version >= 7
