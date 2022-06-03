@@ -16,7 +16,7 @@
     register: current_timezone
   - name: Set Timezone
     command: timedatectl set-timezone {{ timezone }}
-    when: "'{{ timezone }}' not in current_timezone.stdout"
+    when: "'Time zone: {{ timezone }}' not in current_timezone.stdout"
   - name: Enable ntp
     command: timedatectl set-ntp true
     when: "enable_ntp and 'Network time on: no' in current_timezone.stdout"
