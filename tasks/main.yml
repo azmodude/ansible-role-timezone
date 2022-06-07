@@ -10,16 +10,20 @@
     and ansible_distribution_version < 7
 
 - block:
-  - name: Check current timezone
+  - name: Check current timezone value
+    command: timedatectl show --va -p Timezone
+    changed_when: false
+    register: current_timezone_value
+  - name: Set Timezone value
+    command: timedatectl set-timezone {{ timezone }}
+    when: "timezone not in current_timezone_value.stdout"
+  - name: Check NTP status
     command: timedatectl status
     changed_when: false
-    register: current_timezone
-  - name: Set Timezone
-    command: timedatectl set-timezone {{ timezone }}
-    when: "'Time zone: {{ timezone }}' not in current_timezone.stdout"
+    register: current_timezone_status
   - name: Enable ntp
     command: timedatectl set-ntp true
-    when: "enable_ntp and 'Network time on: no' in current_timezone.stdout"
+    when: "enable_ntp and 'Network time on: no' in current_timezone_status.stdout"
   when: >
     ansible_distribution not in ('CentOS', 'Red Hat Enterprise Linux') or
     ansible_distribution in ('CentOS', 'Red Hat Enterprise Linux') and
